@@ -397,8 +397,41 @@ def processerror():
 						path_dest = path_dest.replace(' ','\ ')
 						os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
 						os.system('rm ' + path_source)
+						serrors[i+1][2] = serrors[i+1][2][:serrors[i+1][2].find('-')] + serrors[i][2][serrors[i][2].find('-'):]
 						serrors.pop(i)
 						continue
+			elif (serrors[i][8] == '10'):
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					page = inputpdf1.getPage(0)
+					outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-1):
+							page = inputpdf1.getPage(pagenum)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						id_gen += 1
+					
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+				serror = []
+				serrors[i][8] = ''
+				serror = serrors[i]
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')])
+				if str(int(serror[2][:serror[2].find('-')])+1)==serror[2][int(serror[2].find('-')+1):]:
+					serror[2] = str(int(serror[2][:serror[2].find('-')])+1) + serror[2][serror[2].find('-'):]
+				else:
+					serror[2] = str(int(serror[2][:serror[2].find('-')])+1)
+				serrors.append(serror)
 		i+=1
 	if len(regendoc)>0:
 		pdftojpg(regendoc)
