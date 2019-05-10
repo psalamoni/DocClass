@@ -287,7 +287,7 @@ def processerror():
 	regendoc = []
 	i=0
 	while (i<len(serrors)):
-		if (serrors[i][8] != ''):
+		if (serrors[i][8] != '' and i!=0):
 			print(serrors[i][8])
 			path_source = serrors[i][4]
 			stype = serrors[i][5]
@@ -373,7 +373,8 @@ def processerror():
 						outputpdf.write(pdf_out)
 				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_source)
 				regendoc.append([serrors[i][0],serrors[i][4]])
-				serrors.pop(i)
+				serrors[i][7] = 'Deleted'
+				serrors[i][8] = ''
 				continue
 			elif (serrors[i][8] == '9'):
 				if i<len(serrors)-1:
@@ -396,7 +397,8 @@ def processerror():
 						os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
 						os.system('rm ' + path_source)
 						serrors[i+1][2] = serrors[i+1][2][:serrors[i+1][2].find('-')] + serrors[i][2][serrors[i][2].find('-'):]
-						serrors.pop(i)
+						serrors[i][7] = 'Deleted'
+						serrors[i][8] = ''
 						continue
 			elif (serrors[i][8] == '10'):
 				serrors[i][8] = ''
@@ -449,7 +451,7 @@ def processerror():
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf1.write(pdf_out)
 
-					if (inputpdf1.numPages>1):
+					if (inputpdf1.numPages>qpages):
 						for pagenum in range(inputpdf1.numPages-qpages):
 							page = inputpdf1.getPage(pagenum+qpages)
 							outputpdf2.addPage(page)
@@ -494,7 +496,7 @@ def processerror():
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf1.write(pdf_out)
 
-					if (inputpdf1.numPages>1):
+					if (inputpdf1.numPages>qpages):
 						for pagenum in range(inputpdf1.numPages-qpages):
 							page = inputpdf1.getPage(pagenum+qpages)
 							outputpdf2.addPage(page)
@@ -516,7 +518,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')]) + '-' + str(int(serrors[i][2][:serrors[i][2].find('-')])+qpages)
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
@@ -539,7 +541,7 @@ def processerror():
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf1.write(pdf_out)
 
-					if (inputpdf1.numPages>1):
+					if (inputpdf1.numPages>qpages):
 						for pagenum in range(inputpdf1.numPages-qpages):
 							page = inputpdf1.getPage(pagenum+qpages)
 							outputpdf2.addPage(page)
@@ -584,7 +586,7 @@ def processerror():
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf1.write(pdf_out)
 
-					if (inputpdf1.numPages>1):
+					if (inputpdf1.numPages>qpages):
 						for pagenum in range(inputpdf1.numPages-qpages):
 							page = inputpdf1.getPage(pagenum+qpages)
 							outputpdf2.addPage(page)
@@ -629,7 +631,7 @@ def processerror():
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf1.write(pdf_out)
 
-					if (inputpdf1.numPages>1):
+					if (inputpdf1.numPages>qpages):
 						for pagenum in range(inputpdf1.numPages-qpages):
 							page = inputpdf1.getPage(pagenum+qpages)
 							outputpdf2.addPage(page)
@@ -658,7 +660,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
-			elif (serrors[i][8] == '13'):
+			elif (serrors[i][8] == '16'):
 				doctype = 'ALVARA'
 				qpages = 3
 				serrors[i][8] = ''
@@ -674,7 +676,7 @@ def processerror():
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf1.write(pdf_out)
 
-					if (inputpdf1.numPages>1):
+					if (inputpdf1.numPages>qpages):
 						for pagenum in range(inputpdf1.numPages-qpages):
 							page = inputpdf1.getPage(pagenum+qpages)
 							outputpdf2.addPage(page)
@@ -703,7 +705,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
-		elif (int(serrors[i][8]) > 100):
+			elif (int(serrors[i][8]) > 100):
 				doctype = 'NotRecon'
 				qpages = int(serrors[i][8])-100
 				serrors[i][8] = ''
@@ -719,7 +721,7 @@ def processerror():
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf1.write(pdf_out)
 
-					if (inputpdf1.numPages>1):
+					if (inputpdf1.numPages>qpages):
 						for pagenum in range(inputpdf1.numPages-qpages):
 							page = inputpdf1.getPage(pagenum+qpages)
 							outputpdf2.addPage(page)
