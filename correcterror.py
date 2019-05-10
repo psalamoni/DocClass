@@ -371,8 +371,6 @@ def processerror():
 						outputpdf.addPage(page)
 					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
 						outputpdf.write(pdf_out)
-				
-				
 				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_source)
 				regendoc.append([serrors[i][0],serrors[i][4]])
 				serrors.pop(i)
@@ -401,6 +399,7 @@ def processerror():
 						serrors.pop(i)
 						continue
 			elif (serrors[i][8] == '10'):
+				serrors[i][8] = ''
 				with open(serrors[i][4], "rb") as pdf1_in:
 					inputpdf1 = PdfFileReader(pdf1_in)
 					outputpdf1 = PdfFileWriter()
@@ -418,20 +417,338 @@ def processerror():
 							outputpdf2.addPage(page)
 						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
 							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
 						id_gen += 1
-					
+						serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')])
+						if str(int(serror[2][:serror[2].find('-')])+1)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+1)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+1) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
-				serror = []
+			elif (serrors[i][8] == '11'):
+				doctype = 'HABITESSE'
+				qpages = 1
 				serrors[i][8] = ''
-				serror = serrors[i]
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					page = inputpdf1.getPage(0)
+					outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-qpages):
+							page = inputpdf1.getPage(pagenum+qpages)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
+						id_gen += 1
+						if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('rm ' + path_source)
 				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')])
-				if str(int(serror[2][:serror[2].find('-')])+1)==serror[2][int(serror[2].find('-')+1):]:
-					serror[2] = str(int(serror[2][:serror[2].find('-')])+1) + serror[2][serror[2].find('-'):]
-				else:
-					serror[2] = str(int(serror[2][:serror[2].find('-')])+1)
-				serrors.append(serror)
+				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+				serrors[i][5] = doctype
+				serrors[i][7] = 'Successful'
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+			elif (serrors[i][8] == '12'):
+				doctype = 'HABITESSE'
+				qpages = 2
+				serrors[i][8] = ''
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					for numpage in range(qpages):
+						page = inputpdf1.getPage(numpage)
+						outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-qpages):
+							page = inputpdf1.getPage(pagenum+qpages)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
+						id_gen += 1
+						if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('rm ' + path_source)
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+				serrors[i][5] = doctype
+				serrors[i][7] = 'Successful'
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+			elif (serrors[i][8] == '13'):
+				doctype = 'HABITESSE'
+				qpages = 3
+				serrors[i][8] = ''
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					for numpage in range(qpages):
+						page = inputpdf1.getPage(numpage)
+						outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-qpages):
+							page = inputpdf1.getPage(pagenum+qpages)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
+						id_gen += 1
+						if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('rm ' + path_source)
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+				serrors[i][5] = doctype
+				serrors[i][7] = 'Successful'
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+			elif (serrors[i][8] == '14'):
+				doctype = 'ALVARA'
+				qpages = 1
+				serrors[i][8] = ''
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					for numpage in range(qpages):
+						page = inputpdf1.getPage(numpage)
+						outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-qpages):
+							page = inputpdf1.getPage(pagenum+qpages)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
+						id_gen += 1
+						if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('rm ' + path_source)
+				serrors[i][2] = serrors[i][2][:serrors[i][2].find('-')]
+				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+				serrors[i][5] = doctype
+				serrors[i][7] = 'Successful'
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+			elif (serrors[i][8] == '15'):
+				doctype = 'ALVARA'
+				qpages = 2
+				serrors[i][8] = ''
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					for numpage in range(qpages):
+						page = inputpdf1.getPage(numpage)
+						outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-qpages):
+							page = inputpdf1.getPage(pagenum+qpages)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
+						id_gen += 1
+						if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('rm ' + path_source)
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+				serrors[i][5] = doctype
+				serrors[i][7] = 'Successful'
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+			elif (serrors[i][8] == '13'):
+				doctype = 'ALVARA'
+				qpages = 3
+				serrors[i][8] = ''
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					for numpage in range(qpages):
+						page = inputpdf1.getPage(numpage)
+						outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-qpages):
+							page = inputpdf1.getPage(pagenum+qpages)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
+						id_gen += 1
+						if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('rm ' + path_source)
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+				serrors[i][5] = doctype
+				serrors[i][7] = 'Successful'
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+		elif (int(serrors[i][8]) > 100):
+				doctype = 'NotRecon'
+				qpages = int(serrors[i][8])-100
+				serrors[i][8] = ''
+				with open(serrors[i][4], "rb") as pdf1_in:
+					inputpdf1 = PdfFileReader(pdf1_in)
+					outputpdf1 = PdfFileWriter()
+					outputpdf2 = PdfFileWriter()
+
+					for numpage in range(qpages):
+						page = inputpdf1.getPage(numpage)
+						outputpdf1.addPage(page)
+
+					with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+						outputpdf1.write(pdf_out)
+
+					if (inputpdf1.numPages>1):
+						for pagenum in range(inputpdf1.numPages-qpages):
+							page = inputpdf1.getPage(pagenum+qpages)
+							outputpdf2.addPage(page)
+						with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
+							outputpdf2.write(pdf_out)
+						serror = []
+						serror = serrors[i].copy()
+						serror[3] = id_gen
+						serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
+						serror[5] = 'NotRecon'
+						serror[6] = id_gen
+						serror[7] = 'Error Doc Num'
+						id_gen += 1
+						if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
+						else:
+							serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
+						serrors.append(serror)
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('rm ' + path_source)
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+				serrors[i][5] = doctype
+				serrors[i][7] = 'Successful'
+				path_dest = serrors[i][4]
+				path_dest = path_dest.replace(' ','\ ')
+				os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+			
 		i+=1
 	if len(regendoc)>0:
 		pdftojpg(regendoc)
