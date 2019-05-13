@@ -270,6 +270,12 @@ def processerror():
 			page = Doc[2]
 		page = int(page)
 		return page
+	def onepage(var):
+		if (var.find('-')!=-1):
+			return var.find('-')
+		else:
+			pass
+
 
 	with open('docclass_output/report.csv', 'r') as f:
 		reader = csv.reader(f, delimiter=',',quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -396,7 +402,7 @@ def processerror():
 						path_dest = path_dest.replace(' ','\ ')
 						os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
 						os.system('rm ' + path_source)
-						serrors[i+1][2] = serrors[i+1][2][:serrors[i+1][2].find('-')] + serrors[i][2][serrors[i][2].find('-'):]
+						serrors[i+1][2] = serrors[i+1][2][:onepage(serrors[i+1][2])] + serrors[i][2][onepage(serrors[i][2]):]
 						serrors[i][7] = 'Deleted'
 						serrors[i][8] = ''
 						continue
@@ -473,7 +479,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')])
+				serrors[i][2] = serrors[i][2][:onepage(serrors[i][2])]
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
@@ -518,7 +524,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')]) + '-' + str(int(serrors[i][2][:serrors[i][2].find('-')])+qpages)
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')]) + '-' + str(int(serrors[i][2][:serrors[i][2].find('-')])+qpages-1)
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
@@ -563,7 +569,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')]) + '-' + str(int(serrors[i][2][:serrors[i][2].find('-')])+qpages-1)
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
@@ -608,7 +614,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = serrors[i][2][:serrors[i][2].find('-')]
+				serrors[i][2] = serrors[i][2][:onepage(serrors[i][2])]
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
@@ -653,7 +659,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')]) + '-' + str(int(serrors[i][2][:serrors[i][2].find('-')])+qpages-1)
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
@@ -698,7 +704,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')]) + '-' + str(int(serrors[i][2][:serrors[i][2].find('-')])+qpages-1)
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
@@ -743,7 +749,7 @@ def processerror():
 				path_dest = serrors[i][4]
 				path_dest = path_dest.replace(' ','\ ')
 				os.system('rm ' + path_source)
-				serrors[i][2] = str(serrors[i][2][:serrors[i][2].find('-')] + '-' + int(serrors[i][2][:serrors[i][2].find('-')]+qpages))
+				serrors[i][2] = str(serrors[i][2][:onepage(serrors[i][2])]) + '-' + str(int(serrors[i][2][:onepage(serrors[i][2])])+qpages-1)
 				serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
 				serrors[i][5] = doctype
 				serrors[i][7] = 'Successful'
