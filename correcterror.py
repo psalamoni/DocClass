@@ -402,7 +402,7 @@ def processerror():
 						path_dest = path_dest.replace(' ','\ ')
 						os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
 						os.system('rm ' + path_source)
-						serrors[i+1][2] = serrors[i+1][2][:onepage(serrors[i+1][2])] + serrors[i][2][onepage(serrors[i][2]):]
+						serrors[i+1][2] = serrors[i+1][2][:onepage(serrors[i+1][2])] + '-' + serrors[i][2][onepage(serrors[i][2]):]
 						serrors[i][7] = 'Deleted'
 						serrors[i][8] = ''
 						continue
