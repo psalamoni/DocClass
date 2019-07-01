@@ -66,42 +66,32 @@ def processerror():
 				outputpdf1 = PdfFileWriter()
 				outputpdf2 = PdfFileWriter()
 
-                for numpage in range(qpages):
-                    page = inputpdf1.getPage(numpage)
-                    outputpdf1.addPage(page)
+				for numpage in range(qpages):
+					page = inputpdf1.getPage(numpage)
+					outputpdf1.addPage(page)
 
-                with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
-                    outputpdf1.write(pdf_out)
+				with open('docclass_output/' + stype + '/temp.pdf', "wb") as pdf_out:
+					outputpdf1.write(pdf_out)
 
-                if (inputpdf1.numPages>qpages):
-                    for pagenum in range(inputpdf1.numPages-qpages):
-                        page = inputpdf1.getPage(pagenum+qpages)
-                        outputpdf2.addPage(page)
-                    with open('docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf', "wb") as pdf_out:
-                        outputpdf2.write(pdf_out)
-                    serror = []
-                    serror = serrors[i].copy()
-                    serror[3] = id_gen
-                    serror[4] = 'docclass_output/NotRecon/NotRecon ' + str(id_gen) + '.pdf'
-                    serror[5] = 'NotRecon'
-                    serror[6] = id_gen
-                    serror[7] = 'Error Doc Num'
-                    id_gen += 1
-                    if str(int(serror[2][:serror[2].find('-')])+qpages)==serror[2][int(serror[2].find('-')+1):]:
-                        serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages)
-                    else:
-                        serror[2] = str(int(serror[2][:serror[2].find('-')])+qpages) + serror[2][serror[2].find('-'):]
-                    serrors.append(serror)
-            path_dest = serrors[i][4]
-            path_dest = path_dest.replace(' ','\ ')
-            os.system('rm ' + path_source)
-            serrors[i][2] = str(serrors[i][2][:onepage(serrors[i][2])]) + '-' + str(int(serrors[i][2][:onepage(serrors[i][2])])+qpages-1)
-            serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
-            serrors[i][5] = doctype
-            serrors[i][7] = 'Successful'
-            path_dest = serrors[i][4]
-            path_dest = path_dest.replace(' ','\ ')
-            os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
+				if (inputpdf1.numPages>qpages):
+					for pagenum in range(inputpdf1.numPages-qpages):
+						page = inputpdf1.getPage(pagenum+qpages)
+						outputpdf2.addPage(page)
+					with open('docclass_output/' + str(id_gen) + '.pdf', "wb") as pdf_out:
+						outputpdf2.write(pdf_out)
+					serror = []
+					serror = serrors[i].copy()
+					serror[0] = id_gen
+					serror[1] = 'docclass_output/' + str(id_gen) + '.pdf'
+					id_gen += 1
+					serrors.append(serror)
+			path_dest = serrors[i][1]
+			path_dest = path_dest.replace(' ','\ ')
+			os.system('rm ' + path_source)
+			serrors[i][4] = 'docclass_output/' + doctype + '/' + doctype + ' ' + str(serrors[i][3]) + '.pdf'
+			path_dest = serrors[i][4]
+			path_dest = path_dest.replace(' ','\ ')
+			os.system('mv -f docclass_output/' + stype + '/temp.pdf ' + path_dest)
 
 def GenerateReport(id_source,spath,cf,new):
 	from os import system
